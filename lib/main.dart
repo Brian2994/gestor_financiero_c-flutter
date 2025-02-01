@@ -314,6 +314,18 @@ class _FinancialManagerState extends State<FinancialManager> {
                 itemCount: movements.length,
                 itemBuilder: (context, index) {
                   var movement = movements[index];
+                  IconData movementIcon;
+                  Color iconColor;
+
+                  // Seleccionar ícono y color basado en el tipo de movimiento
+                  if (movement['type'] == 'Ingreso') {
+                    movementIcon = Icons.arrow_upward;  // Flecha hacia arriba para ingreso
+                    iconColor = Colors.green;  // Verde para ingreso
+                  } else {
+                    movementIcon = Icons.arrow_downward;  // Flecha hacia abajo para gasto
+                    iconColor = Colors.red;  // Rojo para gasto
+                  }
+
                   return Card(
                     color: movement['type'] == 'Ingreso'
                         ? Colors.green[100]
@@ -354,6 +366,7 @@ class _FinancialManagerState extends State<FinancialManager> {
                         );
                       },
                       child: ListTile(
+                        leading: Icon(movementIcon, color: iconColor),  // Aquí se agrega el ícono
                         title: Text(movement['description']),
                         subtitle: Text(
                           'S/. ${movement['amount'].toStringAsFixed(2)} - ${movement['date'].toString()}',
